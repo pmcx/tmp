@@ -3,6 +3,7 @@
 https://github.com/joyent/smartos-live/issues/712
 
 # Installation
+(from [MAHDTech|https://github.com/MAHDTech])
 For anyone playing along at home, one work around is to install grub2.
 
 Instructions adapted from HERE
