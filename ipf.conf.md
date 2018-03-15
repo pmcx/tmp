@@ -26,3 +26,11 @@ pass in quick on vioif0 proto icmp from any to 1.2.3.4 keep state
 
 
 pass out quick on vioif0 keep state
+
+# cat ipnat.conf
+# NAT
+map net0 10.0.0.0/24 -> 0/32 proxy port ftp ftp/tcp
+map net0 10.0.0.0/24 -> 0/32 portmap tcp/udp auto
+map net0 10.0.0.0/24 -> 0/32
+#
+rdr net0 0/0 port 22222 -> 10.0.0.100 port 22 tcp
