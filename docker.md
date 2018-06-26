@@ -21,3 +21,6 @@ sed '/complete \-F/ s/$/ dcompose' /etc/bash_completion.d/docker-compose
 sudo curl -L https://raw.githubusercontent.com/docker/machine/v0.14.0/contrib/completion/bash/docker-machine.bash -o /etc/bash_completion.d/docker-machine
 
 ```
+
+Remove docker logs:
+```truncate -s 0 /var/lib/docker/containers/*/*-json.log```
