@@ -24,3 +24,19 @@ sudo curl -L https://raw.githubusercontent.com/docker/machine/v0.14.0/contrib/co
 
 Remove docker logs:
 ```truncate -s 0 /var/lib/docker/containers/*/*-json.log```
+
+
+
+Docker logs:
+Create /etc/docker/daemon.json and restart docker daemon
+
+```
+{
+"log-driver": "json-file",
+"log-opts": {
+    "max-size": "10m",
+    "max-file": "3"
+    }
+}
+```
+
