@@ -16,4 +16,10 @@ root@profistat:/var/log/dist-upgrade#  /etc/update-manager/release-upgrades
 -bash: /etc/update-manager/release-upgrades: Permission denied
 
 Solution:
-sudo mv /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service.bak
+mv /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service /usr/share/dbus-1/system-services/org.freedesktop.systemd1.service.bak
+
+sudo apt-get install -f
+apt-get update
+apt upgrade
+apt dist-upgrade
+apt autoremove

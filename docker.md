@@ -40,3 +40,20 @@ Create /etc/docker/daemon.json and restart docker daemon
 }
 ```
 
+# Docker on ZFS
+level=error msg="'overlay2' is not supported over zfs" storage-driver=overlay2  
+To use ZFS as the storage driver, we need to specify it to the deamon.  
+
+Create /etc/docker/daemon.json and add:  
+```
+{
+  "storage-driver": "zfs"
+}
+```
+If your zpool is not mounted on /var/lib/docker your need to use the "graph" option like this in my case:
+```
+{
+  "storage-driver": "zfs",
+  "graph": "/tank/docker"
+}
+```
