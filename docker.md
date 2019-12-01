@@ -15,7 +15,7 @@ ln -s /usr/local/bin/docker-compose /usr/local/bin/dcompose
 
 curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 
-sed -i '/complete \-F/ s/$/\ dcompose/' docker-compose
+sed -i '/complete \-F/ s/$/\ dcompose/' /etc/bash_completion.d/docker-compose
 
 
 curl -L https://raw.githubusercontent.com/docker/machine/v0.14.0/contrib/completion/bash/docker-machine.bash -o /etc/bash_completion.d/docker-machine
