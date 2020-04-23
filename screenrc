@@ -1,0 +1,9 @@
+# 
+shell -bash
+vbell off
+startup_message off
+
+# scrolling 
+# win10 + cygwin -ssh-> linux server -> screen
+defscrollback 50000
+termcapinfo xterm* ti@:te@
