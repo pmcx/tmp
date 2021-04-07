@@ -1,0 +1,107 @@
+Check if ... DOESN'T WORK WITH BHYVE YET
+
+SmartOS: how to clone a KVM machine
+Get the disk0 filesystem of the VM to clone.
+
+
+
+vmadm get uuid-originvm | json disks
+
+[
+  {
+    "path": "/dev/zvol/rdsk/zones/uuid-originvm-disk0",
+    "boot": true,
+    "model": "virtio",
+    "media": "disk",
+    "image_size": 10240,
+    "image_uuid": "d8e65ea2-1f3e-11e5-8557-6b43e0a88b38",
+    "zfs_filesystem": "zones/uuid-originvm-disk0",
+    "zpool": "zones",
+    "size": 10240,
+    "compression": "off",
+    "refreservation": 10240,
+    "block_size": 8192
+  }
+]
+
+Take a snapshot
+
+zfs snapshot zones/uuid-originvm-disk0@toclone
+
+Create a json file in order to create the new VM.
+vi targetvm.json
+Please note: there are no disks.
+
+{
+  "alias": "targetvm",
+  "hostname": "targetvm",
+  "dns_domain": "mydomain.it",
+  "brand": "kvm",
+  "resolvers": [
+    "192.168.0.2"
+  ],
+  "ram": "2048",
+  "vcpus": "2",
+  "nics": [
+    {
+      "nic_tag": "admin",
+      "ip": "192.168.0.201",
+      "netmask": "255.255.255.0",
+      "gateway": "192.168.0.1",
+      "model": "virtio",
+      "primary": true
+    }
+  ]
+}
+
+vmadm create -f targetvm.json
+
+Let's clone the filesystem of the origin VM.
+
+zfs clone zones/uuid-originvm-disk0@toclone zones/uuid-targetvm-disk0
+
+Create a json in order to add a disk to the new VM.
+vi adddisk.json
+
+{
+   "add_disks": [
+      {
+          "media": "disk",
+          "model": "virtio",
+          "boot": true,
+          "nocreate": true,
+          "size": 10240,
+          "path": "/dev/zvol/rdsk/zones/435ca788-4935-ead3-f4e4-94e6eb7dd4b6-disk0"
+      }
+   ]
+}
+
+Let's add the disk to the newly created VM.
+
+vmadm stop uuid-targetvm -F
+
+vmadm update uuid-targetvm -f adddisk.json
+
+This is important.
+
+zfs promote  zones/uuid-targetvm-disk0
+
+From man zfs:
+
+zfs promote clone-filesystem
+
+    Promotes a clone file system to no longer be dependent on its "ori-
+    gin" snapshot. This makes it possible to destroy  the  file  system
+    that  the clone was created from. The clone parent-child dependency
+    relationship is reversed, so that the origin file system becomes  a
+    clone of the specified file system.
+
+    The  snapshot  that  was cloned, and any snapshots previous to this
+    snapshot, are now owned by the promoted clone. The space  they  use
+    moves  from the origin file system to the promoted clone, so enough
+    space must be available to  accommodate  these  snapshots.  No  new
+    space  is  consumed  by this operation, but the space accounting is
+    adjusted. The promoted clone must not have any conflicting snapshot
+    names  of  its own. The rename subcommand can be used to rename any
+    conflicting snapshots.
+
