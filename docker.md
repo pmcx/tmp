@@ -9,13 +9,13 @@ apt-get install docker-ce
 ```
 
 ```
-curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod 755 /usr/local/bin/docker-compose
 ln -s /usr/local/bin/docker-compose /usr/local/bin/dcompose
 
-curl -L https://raw.githubusercontent.com/docker/compose/1.24.1/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
+curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/bash/docker-compose -o /etc/bash_completion.d/docker-compose
 
-sed -i '/complete \-F/ s/$/\ dcompose/' docker-compose
+sed -i '/complete \-F/ s/$/\ dcompose/' /etc/bash_completion.d/docker-compose
 
 
 curl -L https://raw.githubusercontent.com/docker/machine/v0.14.0/contrib/completion/bash/docker-machine.bash -o /etc/bash_completion.d/docker-machine

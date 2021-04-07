@@ -5,3 +5,7 @@
     "max-file": "3"
     }
 }
+
+{
+    "storage-driver": "overlay2"
+}

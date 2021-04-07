@@ -1,0 +1,3 @@
+about:config
+
+security.enterprise_roots.enabled true
