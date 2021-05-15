@@ -1,0 +1,3 @@
+kubectl completion bash 
+
+kubectl completion bash > /usr/share/bash-completion/completions/
