@@ -1,0 +1,6 @@
+# in Chrome
+# url
+https://vmware-plugin:8094/
+# then F12 - developer console ; tab: Console
+sendCommand(SecurityInterstitialCommandId.CMD_PROCEED)
+
